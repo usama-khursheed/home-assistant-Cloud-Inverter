@@ -2,37 +2,34 @@
   "config": {
     "step": {
       "user": {
-        "title": "Connect to Cloud Inverter",
-        "description": "Enter your CloudInverter.net credentials to connect your solar inverter to Home Assistant.",
+        "title": "Cloud Inverter Setup",
+        "description": "Enter your CloudInverter.net login credentials.\n\nYou can find these at: https://www.cloudinverter.net",
         "data": {
-          "username": "Username",
+          "username": "Username (Member ID)",
           "password": "Password"
-        },
-        "data_description": {
-          "username": "Your CloudInverter.net login username (email or username)",
-          "password": "Your CloudInverter.net login password"
         }
       },
-      "inverter_select": {
-        "title": "Select Inverter",
-        "description": "You have {inverter_count} inverter(s) in your Cloud Inverter account. Please select which one to monitor.",
+      "select_inverter": {
+        "title": "Select Your Inverter",
+        "description": "Multiple inverters found. Please select which one to monitor.\n\n**Note:** The ID shown (e.g., 2409-44470087PH) matches the serial number printed on your inverter device.",
         "data": {
-          "inverter_id": "Inverter Device"
+          "inverter": "Inverter"
         }
       }
     },
     "error": {
-      "invalid_auth": "Invalid username or password. Please check your CloudInverter.net credentials and try again.",
-      "cannot_connect": "Cannot connect to Cloud Inverter servers. Please check your internet connection and try again.",
-      "no_inverters": "No inverters found in your Cloud Inverter account. Please add an inverter first and try again.",
+      "cannot_connect": "Failed to connect to Cloud Inverter API. Please check your internet connection and try again.",
+      "invalid_auth": "Invalid username or password. Please check your credentials and try again.",
+      "no_inverters": "No inverters found in your account. Please add an inverter to your CloudInverter.net account first.",
       "unknown": "An unexpected error occurred. Please check the logs and try again."
     },
     "abort": {
-      "already_configured": "This inverter is already configured in Home Assistant.",
+      "already_configured": "This inverter is already configured. Each inverter can only be added once."
       "no_inverters_found": "No inverters found in your Cloud Inverter account.",
       "error_fetching_inverters": "Error fetching inverters from Cloud Inverter. Please try again later."
     }
-  },
+  }
+}
   "options": {
     "step": {
       "init": {
