@@ -1,23 +1,5 @@
 {
   "name": "Cloud Inverter",
   "render_readme": true,
-  "domains": ["sensor"],
-  "iot_class": "cloud_polling",
   "homeassistant": "2023.1.0"
 }
-```
-
-## 4. Repository Structure
-
-Your repository should look like this:
-```
-home-assistant-Cloud-Inverter/
-├── custom_components/
-│   └── cloud_inverter/
-│       ├── __init__.py
-│       ├── manifest.json
-│       ├── sensor.py
-│       └── ... (other files)
-├── hacs.json
-├── README.md
-└── ... (other files)
