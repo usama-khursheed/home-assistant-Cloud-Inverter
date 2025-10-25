@@ -1,0 +1,93 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect to Cloud Inverter",
+        "description": "Enter your CloudInverter.net credentials to connect your inverter to Home Assistant.",
+        "data": {
+          "username": "Username",
+          "password": "Password"
+        },
+        "data_description": {
+          "username": "Your CloudInverter.net login username",
+          "password": "Your CloudInverter.net login password"
+        }
+      },
+      "inverter_select": {
+        "title": "Select Inverter",
+        "description": "You have {inverter_count} inverter(s). Please select which one to monitor.",
+        "data": {
+          "inverter_id": "Inverter Device"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "Invalid username or password. Please check your credentials.",
+      "cannot_connect": "Cannot connect to Cloud Inverter servers. Please check your internet connection.",
+      "no_inverters": "No inverters found in your Cloud Inverter account.",
+      "unknown": "An unexpected error occurred. Please try again later."
+    },
+    "abort": {
+      "already_configured": "This inverter is already configured.",
+      "no_inverters_found": "No inverters found. Please check your Cloud Inverter account.",
+      "error_fetching_inverters": "Error fetching inverters. Please try again."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Cloud Inverter Options",
+        "description": "Configure Cloud Inverter integration options.",
+        "data": {
+          "scan_interval": "Update Interval (seconds)"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "solar_pv_current_power": {
+        "name": "Solar PV Current Power",
+        "state_attributes": {
+          "unit_of_measurement": "W"
+        }
+      },
+      "solar_production_today": {
+        "name": "Solar Production Today",
+        "state_attributes": {
+          "unit_of_measurement": "kWh"
+        }
+      },
+      "battery_soc": {
+        "name": "Battery SOC",
+        "state_attributes": {
+          "unit_of_measurement": "%"
+        }
+      },
+      "battery_voltage": {
+        "name": "Battery Voltage",
+        "state_attributes": {
+          "unit_of_measurement": "V"
+        }
+      },
+      "grid_voltage": {
+        "name": "Grid Voltage",
+        "state_attributes": {
+          "unit_of_measurement": "V"
+        }
+      },
+      "home_load_power": {
+        "name": "Home Load Power",
+        "state_attributes": {
+          "unit_of_measurement": "W"
+        }
+      },
+      "inverter_temperature": {
+        "name": "Inverter Temperature",
+        "state_attributes": {
+          "unit_of_measurement": "°C"
+        }
+      }
+    }
+  }
+}
