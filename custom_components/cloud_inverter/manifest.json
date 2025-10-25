@@ -1,13 +1,21 @@
 {
   "domain": "cloud_inverter",
   "name": "Cloud Inverter",
-  "codeowners": ["@usama-khursheed"],
+  "codeowners": [
+    "@usama-khursheed"
+  ],
   "config_flow": true,
   "documentation": "https://github.com/usama-khursheed/home-assistant-Cloud-Inverter",
   "issue_tracker": "https://github.com/usama-khursheed/home-assistant-Cloud-Inverter/issues",
-  "requirements": ["aiohttp>=3.9.0"],
+  "requirements": [
+    "aiohttp>=3.9.0"
+  ],
   "version": "1.0.0",
   "homeassistant": "2024.11.0",
   "iot_class": "cloud_polling",
-  "loggers": ["custom_components.cloud_inverter"]
+  "loggers": [
+    "custom_components.cloud_inverter"
+  ],
+  "integration_type": "service",
+  "quality_scale": "community"
 }
