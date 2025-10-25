@@ -199,7 +199,7 @@ MIT License - See LICENSE file
  Support
 
 For issues specific to:
-- Integration**: [GitHub Issues](https://github.com/yourusername/ha-cloud-inverter/issues)
+- Integration**: [GitHub Issues](https://github.com/usama-khursheed/home-assistant-Cloud-Inverter/issues)
 - Cloud Inverter Device**: Contact your device manufacturer
 
 ---
