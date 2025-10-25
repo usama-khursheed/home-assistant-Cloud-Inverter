@@ -144,19 +144,24 @@ class CloudInverterAPI:
                 async with session.post(ENDPOINT_GROUP_LIST, json=payload, headers=headers) as response:
                     if response.status == 200:
                         data = await response.json()
+                        _LOGGER.debug("Group list response: %s", data)
                         groups = data.get("AllGroupList", [])
                         if groups and len(groups) > 0:
                             # Store the AutoID from the first group
                             first_group = groups[0]
-                            self.goods_id = first_group.get("AutoID")
-                            _LOGGER.info("Found inverter group with ID: %s", self.goods_id)
+                            # The AutoID is what we need for getting inverter details
+                            self.goods_id = str(first_group.get("AutoID"))
+                            _LOGGER.info("Found inverter group. AutoID: %s, Type: %s", 
+                                       self.goods_id, first_group.get("GoodsTypeName"))
+                        else:
+                            _LOGGER.warning("No inverter groups found in response")
                         return groups
                     else:
-                        _LOGGER.error("Failed to get group list: %s", await response.text())
+                        _LOGGER.error("Failed to get group list (status %s): %s", response.status, await response.text())
                         return []
                     
         except Exception as err:
-            _LOGGER.error("Error getting group list: %s", err)
+            _LOGGER.error("Error getting group list: %s", err, exc_info=True)
             return []
 
     async def get_inverter_data(self, goods_id: str = None) -> dict[str, Any]:
