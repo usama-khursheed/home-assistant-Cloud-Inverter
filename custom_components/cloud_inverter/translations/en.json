@@ -1,0 +1,373 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect to Cloud Inverter",
+        "description": "Enter your CloudInverter.net credentials to connect your solar inverter to Home Assistant.",
+        "data": {
+          "username": "Username",
+          "password": "Password"
+        },
+        "data_description": {
+          "username": "Your CloudInverter.net login username (email or username)",
+          "password": "Your CloudInverter.net login password"
+        }
+      },
+      "inverter_select": {
+        "title": "Select Inverter",
+        "description": "You have {inverter_count} inverter(s) in your Cloud Inverter account. Please select which one to monitor.",
+        "data": {
+          "inverter_id": "Inverter Device"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "Invalid username or password. Please check your CloudInverter.net credentials and try again.",
+      "cannot_connect": "Cannot connect to Cloud Inverter servers. Please check your internet connection and try again.",
+      "no_inverters": "No inverters found in your Cloud Inverter account. Please add an inverter first and try again.",
+      "unknown": "An unexpected error occurred. Please check the logs and try again."
+    },
+    "abort": {
+      "already_configured": "This inverter is already configured in Home Assistant.",
+      "no_inverters_found": "No inverters found in your Cloud Inverter account.",
+      "error_fetching_inverters": "Error fetching inverters from Cloud Inverter. Please try again later."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Cloud Inverter Options",
+        "description": "Configure Cloud Inverter integration options.",
+        "data": {}
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "solar_pv_current_power": {
+        "name": "Solar PV Current Power",
+        "state_attributes": {
+          "unit_of_measurement": "W"
+        }
+      },
+      "solar_production_today": {
+        "name": "Solar Production Today",
+        "state_attributes": {
+          "unit_of_measurement": "kWh"
+        }
+      },
+      "solar_production_all_time": {
+        "name": "Solar Production All Time",
+        "state_attributes": {
+          "unit_of_measurement": "MWh"
+        }
+      },
+      "peak_power_today": {
+        "name": "Peak Power Today",
+        "state_attributes": {
+          "unit_of_measurement": "W"
+        }
+      },
+      "solar_mppt1_power": {
+        "name": "MPPT1 Power",
+        "state_attributes": {
+          "unit_of_measurement": "kW"
+        }
+      },
+      "solar_mppt2_power": {
+        "name": "MPPT2 Power",
+        "state_attributes": {
+          "unit_of_measurement": "kW"
+        }
+      },
+      "solar_mppt1_voltage": {
+        "name": "MPPT1 Voltage",
+        "state_attributes": {
+          "unit_of_measurement": "V"
+        }
+      },
+      "solar_mppt2_voltage": {
+        "name": "MPPT2 Voltage",
+        "state_attributes": {
+          "unit_of_measurement": "V"
+        }
+      },
+      "solar_mppt1_ampere": {
+        "name": "MPPT1 Current",
+        "state_attributes": {
+          "unit_of_measurement": "A"
+        }
+      },
+      "solar_mppt2_ampere": {
+        "name": "MPPT2 Current",
+        "state_attributes": {
+          "unit_of_measurement": "A"
+        }
+      },
+      "battery_soc": {
+        "name": "Battery SOC",
+        "state_attributes": {
+          "unit_of_measurement": "%"
+        }
+      },
+      "battery_soh": {
+        "name": "Battery SOH",
+        "state_attributes": {
+          "unit_of_measurement": "%"
+        }
+      },
+      "battery_voltage": {
+        "name": "Battery Voltage",
+        "state_attributes": {
+          "unit_of_measurement": "V"
+        }
+      },
+      "battery_ampere": {
+        "name": "Battery Current",
+        "state_attributes": {
+          "unit_of_measurement": "A"
+        }
+      },
+      "battery_charge_power": {
+        "name": "Battery Charge Power",
+        "state_attributes": {
+          "unit_of_measurement": "W"
+        }
+      },
+      "battery_discharge_power": {
+        "name": "Battery Discharge Power",
+        "state_attributes": {
+          "unit_of_measurement": "W"
+        }
+      },
+      "battery_type": {
+        "name": "Battery Type"
+      },
+      "battery_capacity": {
+        "name": "Battery Capacity",
+        "state_attributes": {
+          "unit_of_measurement": "Ah"
+        }
+      },
+      "battery_charge_today": {
+        "name": "Battery Charge Today",
+        "state_attributes": {
+          "unit_of_measurement": "kWh"
+        }
+      },
+      "battery_charge_all_time": {
+        "name": "Battery Charge All Time",
+        "state_attributes": {
+          "unit_of_measurement": "kWh"
+        }
+      },
+      "battery_discharge_today": {
+        "name": "Battery Discharge Today",
+        "state_attributes": {
+          "unit_of_measurement": "kWh"
+        }
+      },
+      "battery_discharge_all_time": {
+        "name": "Battery Discharge All Time",
+        "state_attributes": {
+          "unit_of_measurement": "kWh"
+        }
+      },
+      "grid_voltage": {
+        "name": "Grid Voltage",
+        "state_attributes": {
+          "unit_of_measurement": "V"
+        }
+      },
+      "grid_current": {
+        "name": "Grid Current",
+        "state_attributes": {
+          "unit_of_measurement": "A"
+        }
+      },
+      "grid_frequency": {
+        "name": "Grid Frequency",
+        "state_attributes": {
+          "unit_of_measurement": "Hz"
+        }
+      },
+      "grid_export_today": {
+        "name": "Grid Export Today",
+        "state_attributes": {
+          "unit_of_measurement": "kWh"
+        }
+      },
+      "grid_export_total": {
+        "name": "Grid Export Total",
+        "state_attributes": {
+          "unit_of_measurement": "kWh"
+        }
+      },
+      "grid_import_today": {
+        "name": "Grid Import Today",
+        "state_attributes": {
+          "unit_of_measurement": "kWh"
+        }
+      },
+      "grid_import_total": {
+        "name": "Grid Import Total",
+        "state_attributes": {
+          "unit_of_measurement": "kWh"
+        }
+      },
+      "home_load_power": {
+        "name": "Home Load Power",
+        "state_attributes": {
+          "unit_of_measurement": "W"
+        }
+      },
+      "home_load_voltage": {
+        "name": "Home Load Voltage",
+        "state_attributes": {
+          "unit_of_measurement": "V"
+        }
+      },
+      "home_load_current": {
+        "name": "Home Load Current",
+        "state_attributes": {
+          "unit_of_measurement": "A"
+        }
+      },
+      "home_load_frequency": {
+        "name": "Home Load Frequency",
+        "state_attributes": {
+          "unit_of_measurement": "Hz"
+        }
+      },
+      "home_load_today": {
+        "name": "Home Load Today",
+        "state_attributes": {
+          "unit_of_measurement": "kWh"
+        }
+      },
+      "home_load_total": {
+        "name": "Home Load Total",
+        "state_attributes": {
+          "unit_of_measurement": "kWh"
+        }
+      },
+      "heavy_load_power": {
+        "name": "Heavy Load Power",
+        "state_attributes": {
+          "unit_of_measurement": "W"
+        }
+      },
+      "heavy_load_voltage": {
+        "name": "Heavy Load Voltage",
+        "state_attributes": {
+          "unit_of_measurement": "V"
+        }
+      },
+      "heavy_load_current": {
+        "name": "Heavy Load Current",
+        "state_attributes": {
+          "unit_of_measurement": "A"
+        }
+      },
+      "heavy_load_frequency": {
+        "name": "Heavy Load Frequency",
+        "state_attributes": {
+          "unit_of_measurement": "Hz"
+        }
+      },
+      "heavy_load_today": {
+        "name": "Heavy Load Today",
+        "state_attributes": {
+          "unit_of_measurement": "kWh"
+        }
+      },
+      "heavy_load_total": {
+        "name": "Heavy Load Total",
+        "state_attributes": {
+          "unit_of_measurement": "kWh"
+        }
+      },
+      "on_grid_load_power": {
+        "name": "On Grid Load Power",
+        "state_attributes": {
+          "unit_of_measurement": "W"
+        }
+      },
+      "on_grid_load_voltage": {
+        "name": "On Grid Load Voltage",
+        "state_attributes": {
+          "unit_of_measurement": "V"
+        }
+      },
+      "on_grid_load_current": {
+        "name": "On Grid Load Current",
+        "state_attributes": {
+          "unit_of_measurement": "A"
+        }
+      },
+      "on_grid_load_frequency": {
+        "name": "On Grid Load Frequency",
+        "state_attributes": {
+          "unit_of_measurement": "Hz"
+        }
+      },
+      "on_grid_load_today": {
+        "name": "On Grid Load Today",
+        "state_attributes": {
+          "unit_of_measurement": "kWh"
+        }
+      },
+      "on_grid_load_total": {
+        "name": "On Grid Load Total",
+        "state_attributes": {
+          "unit_of_measurement": "kWh"
+        }
+      },
+      "inverter_temperature": {
+        "name": "Inverter Temperature",
+        "state_attributes": {
+          "unit_of_measurement": "°C"
+        }
+      },
+      "inverter_model": {
+        "name": "Inverter Model"
+      },
+      "inverter_serial": {
+        "name": "Inverter Serial Number"
+      },
+      "inverter_status": {
+        "name": "Inverter Status"
+      },
+      "inverter_wifi_strength": {
+        "name": "Inverter WiFi Strength",
+        "state_attributes": {
+          "unit_of_measurement": "%"
+        }
+      },
+      "inverter_operating_mode": {
+        "name": "Inverter Operating Mode"
+      },
+      "inverter_operating_status": {
+        "name": "Inverter Operating Status"
+      },
+      "inverter_firmware_version": {
+        "name": "Inverter Firmware Version"
+      },
+      "inverter_esp32_version": {
+        "name": "Inverter ESP32 Version"
+      },
+      "self_consumption_rate": {
+        "name": "Self Consumption Rate",
+        "state_attributes": {
+          "unit_of_measurement": "%"
+        }
+      },
+      "self_sufficiency_rate": {
+        "name": "Self Sufficiency Rate",
+        "state_attributes": {
+          "unit_of_measurement": "%"
+        }
+      }
+    }
+  }
+}
