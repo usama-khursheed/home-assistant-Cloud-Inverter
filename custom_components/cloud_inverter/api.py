@@ -187,13 +187,14 @@ class CloudInverterAPI:
         try:
             session = await self._get_session()
             
-            # We need the actual GoodsID (serial number) from the inverter
-            # First, let's try to get it from the group list detail
-            # For now, we'll use the AutoID we have
-            payload = {
-                "GoodsID": goods_id,  # This might need to be the actual serial number
+            # According to your API call, we need to use the actual serial number
+            # But we'll try with the AutoID first, and if that fails, 
+            # we'll need to get the actual GoodsID from somewhere else
+            
+            # First attempt: Try getting all members to find the actual GoodsID
+            all_members_payload = {
                 "MemberAutoID": self.member_auto_id,
-                "sign": "bA/YbB72GDQL6DmqFtfIYLfV68qsRoH+B7Q2ZhFbiwWqDwO37OAcUqk/RAHWIcG75YQIVk7uvfISm3P0f/V0i6mgF+Dr5/P4eaq6skBL8HQ="
+                "sign": "eOQKIdmAVNdcrWOxOmktv5d2jIygN0ID/LcvUbmuSnboEVMSWqplaZ2btt8g/ywYDX3dt9LyGPyI8DxJPjYUsA=="
             }
             
             headers = {
@@ -202,18 +203,50 @@ class CloudInverterAPI:
                 "cookie": "timezone=Asia%2FKarachi"
             }
             
+            # Try to get the actual device serial from getAllAllMember
+            try:
+                async with asyncio.timeout(30):
+                    async with session.post(ENDPOINT_ALL_MEMBERS, json=all_members_payload, headers=headers) as response:
+                        if response.status == 200:
+                            members_data = await response.json()
+                            _LOGGER.debug("All members data: %s", members_data)
+            except Exception as e:
+                _LOGGER.debug("Could not get all members data: %s", e)
+            
+            # Now try to get the inverter detail using the AutoID from group
+            # Based on your example, the GoodsID should come from somewhere
+            # Let's try to construct the request with what we have
+            payload = {
+                "GoodsID": goods_id,  # Using AutoID for now
+                "MemberAutoID": self.member_auto_id,
+                "sign": "bA/YbB72GDQL6DmqFtfIYLfV68qsRoH+B7Q2ZhFbiwWqDwO37OAcUqk/RAHWIcG75YQIVk7uvfISm3P0f/V0i6mgF+Dr5/P4eaq6skBL8HQ="
+            }
+            
+            _LOGGER.debug("Requesting inverter data with GoodsID: %s", goods_id)
+            
             async with asyncio.timeout(30):
                 async with session.post(ENDPOINT_INVERTER_DETAIL, json=payload, headers=headers) as response:
+                    response_text = await response.text()
+                    _LOGGER.debug("Inverter detail response (status %s): %s", response.status, response_text)
+                    
                     if response.status == 200:
-                        data = await response.json()
-                        _LOGGER.debug("Inverter data received: %s", data)
-                        return data
+                        try:
+                            data = await response.json() if response_text else {}
+                            if data:
+                                _LOGGER.info("Successfully retrieved inverter data")
+                                return data
+                            else:
+                                _LOGGER.warning("Received empty inverter data")
+                                return {}
+                        except Exception as e:
+                            _LOGGER.error("Failed to parse inverter data JSON: %s", e)
+                            return {}
                     else:
-                        _LOGGER.error("Failed to get inverter data (status %s): %s", response.status, await response.text())
+                        _LOGGER.error("Failed to get inverter data (status %s): %s", response.status, response_text)
                         return {}
                     
         except Exception as err:
-            _LOGGER.error("Error getting inverter data: %s", err)
+            _LOGGER.error("Error getting inverter data: %s", err, exc_info=True)
             return {}
 
     async def test_connection(self) -> bool:
