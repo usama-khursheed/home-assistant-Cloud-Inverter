@@ -171,8 +171,13 @@ class CloudInverterDataUpdateCoordinator(DataUpdateCoordinator):
         """Fetch data from API."""
         try:
             data = await self.api.get_inverter_data()
+            
+            _LOGGER.debug("Raw API data: %s", data)
+            
             if not data:
-                raise UpdateFailed("Failed to fetch inverter data")
+                _LOGGER.warning("No data returned from API")
+                # Return empty dict but don't fail - sensors will show unavailable
+                return {}
             
             # Flatten the data structure for easier access
             flattened_data = {}
@@ -213,13 +218,18 @@ class CloudInverterDataUpdateCoordinator(DataUpdateCoordinator):
             
             # Calculate battery power (charging is positive, discharging is negative)
             if "toPbat" in flattened_data and "fromPbat" in flattened_data:
-                to_bat = float(flattened_data.get("toPbat", 0))
-                from_bat = float(flattened_data.get("fromPbat", 0))
-                flattened_data["battery_power"] = to_bat - from_bat
+                try:
+                    to_bat = float(flattened_data.get("toPbat", 0) or 0)
+                    from_bat = float(flattened_data.get("fromPbat", 0) or 0)
+                    flattened_data["battery_power"] = to_bat - from_bat
+                except (ValueError, TypeError):
+                    flattened_data["battery_power"] = 0
             
+            _LOGGER.debug("Flattened data: %s", flattened_data)
             return flattened_data
             
         except Exception as err:
+            _LOGGER.error("Error communicating with API: %s", err, exc_info=True)
             raise UpdateFailed(f"Error communicating with API: {err}")
 
 
