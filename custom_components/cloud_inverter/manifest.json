@@ -6,5 +6,6 @@
   "issue_tracker": "https://github.com/usama-khursheed/home-assistant-Cloud-Inverter/issues",
   "requirements": [],
   "codeowners": ["@usama-khursheed"],
-  "iot_class": "cloud_polling"
+  "iot_class": "cloud_polling",
+  "config_flow": true
 }
