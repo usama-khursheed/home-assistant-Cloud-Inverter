@@ -1,6 +1,7 @@
 """Cloud Inverter API client."""
 import logging
 import json
+import asyncio
 from typing import Any, Dict, Optional
 import aiohttp
 from datetime import datetime
@@ -100,6 +101,27 @@ class CloudInverterAPI:
             _LOGGER.error(f"Login exception: {e}")
             return False
 
+    async def get_member_data(self) -> Dict[str, Any]:
+        """Get member data including timezone and system info."""
+        if not self.token:
+            if not await self.login():
+                return {}
+
+        try:
+            _LOGGER.debug("Fetching member data")
+
+            data = {
+                "MemberAutoID": self.member_auto_id,
+                "language": "en-US",
+            }
+
+            response = await self._make_request(self.MEMBER_DATA_ENDPOINT, data)
+            return response
+
+        except Exception as e:
+            _LOGGER.error(f"Get member data error: {e}")
+            return {}
+
     async def get_inverters(self) -> list:
         """Get list of available inverters."""
         if not self.token:
@@ -168,7 +190,7 @@ class CloudInverterAPI:
         if not self.token:
             _LOGGER.debug("Token not available, logging in")
             if not await self.login():
-                return {}
+                return {"success": False, "timestamp": datetime.now().isoformat()}
 
         try:
             # Get inverter details
@@ -176,7 +198,7 @@ class CloudInverterAPI:
 
             if not inverter_data:
                 _LOGGER.warning("No inverter data available")
-                return {}
+                return {"success": False, "timestamp": datetime.now().isoformat()}
 
             return {
                 "timestamp": datetime.now().isoformat(),
@@ -187,6 +209,3 @@ class CloudInverterAPI:
         except Exception as e:
             _LOGGER.error(f"Error getting all data: {e}")
             return {"success": False, "timestamp": datetime.now().isoformat()}
-
-
-import asyncio
