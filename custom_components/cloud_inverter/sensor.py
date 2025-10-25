@@ -47,8 +47,14 @@ async def async_setup_entry(
     """Set up Cloud Inverter sensors."""
     username = entry.data[CONF_USERNAME]
     password = entry.data[CONF_PASSWORD]
+    goods_id = entry.data.get("goods_id")  # Get the selected inverter ID
     
     api = CloudInverterAPI(username, password)
+    
+    # Set the goods_id directly if provided
+    if goods_id:
+        api.goods_id = goods_id
+        _LOGGER.info("Using pre-configured inverter GoodsID: %s", goods_id)
     
     # Create coordinator
     coordinator = CloudInverterDataUpdateCoordinator(hass, api)
