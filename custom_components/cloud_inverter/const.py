@@ -10,11 +10,13 @@ ENDPOINT_LOGIN = f"{API_BASE_URL}/UserLogin_v1"
 ENDPOINT_MEMBER_DATA = f"{API_BASE_URL}/GetMemberData"
 ENDPOINT_ALL_MEMBERS = f"{API_BASE_URL}/getAllAllMember"
 ENDPOINT_GROUP_LIST = f"{API_BASE_URL}/GroupList"
+ENDPOINT_GROUP_DETAIL = f"{API_BASE_URL}/GroupDetailList"
 ENDPOINT_INVERTER_DETAIL = f"{API_BASE_URL}/InverterDetailInfoNewone"
 
 # Configuration
 CONF_USERNAME = "username"
 CONF_PASSWORD = "password"
+CONF_GOODS_ID = "goods_id"
 CONF_MEMBER_AUTO_ID = "member_auto_id"
 CONF_TOKEN = "token"
 
