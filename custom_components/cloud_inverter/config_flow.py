@@ -17,11 +17,24 @@ _LOGGER = logging.getLogger(__name__)
 CONF_INVERTER_ID = "inverter_id"
 
 
+class CannotConnect(HomeAssistantError):
+    """Error to indicate we cannot connect."""
+
+
+class InvalidAuth(HomeAssistantError):
+    """Error to indicate invalid authentication."""
+
+
 class CloudInverterConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     """Handle a config flow for Cloud Inverter."""
 
     VERSION = 1
     MINOR_VERSION = 1
+
+    def __init__(self):
+        """Initialize config flow."""
+        self.api: Optional[CloudInverterAPI] = None
+        self.user_input: Optional[Dict[str, Any]] = None
 
     async def async_step_user(
         self, user_input: Optional[Dict[str, Any]] = None
@@ -39,6 +52,7 @@ class CloudInverterConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
                 if not await api.login():
                     errors["base"] = "invalid_auth"
+                    await api.close()
                 else:
                     # Login successful, store for next step
                     self.api = api
@@ -132,11 +146,3 @@ class CloudInverterConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 CONF_INVERTER_ID: inverter_id,
             },
         )
-
-
-class CannotConnect(HomeAssistantError):
-    """Error to indicate we cannot connect."""
-
-
-class InvalidAuth(HomeAssistantError):
-    """Error to indicate invalid authentication."""
